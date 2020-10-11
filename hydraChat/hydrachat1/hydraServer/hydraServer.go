@@ -23,6 +23,8 @@ func startListening(listener net.Listener) {
 	}
 }
 
-func sendMessages() {
+func sendMessages(writer bufio.Writer) {
+	writer.WriteString("message")
+	writer.Flush()
 
 }
