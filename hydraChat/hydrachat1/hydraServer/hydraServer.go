@@ -18,13 +18,22 @@ func startListening(listener net.Listener) {
 	for {
 		conn, _ := listener.Accept()
 		writer := bufio.NewWriter(conn)
-		_ = writer
+		// _ = writer
+		go func() {
+
+			scanner := bufio.NewScanner(conn)
+
+			for scanner.Scan() {
+				msg := scanner.Text()
+				writer.WriteString(msg)
+				writer.Flush()
+
+			}
+		}()
 
 	}
 }
 
 func sendMessages(writer bufio.Writer) {
-	writer.WriteString("message")
-	writer.Flush()
 
 }
