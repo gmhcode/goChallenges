@@ -9,7 +9,8 @@ import (
 
 func main() {
 	done := make(chan string)
-	connection, _ := net.Dial("tcp", "localhost:2300")
+	connection, _ := net.Dial("tcp", "127.0.0.1:2300")
+	writeToServer(connection)
 	go listenToServer(connection)
 
 	<-done
@@ -28,8 +29,12 @@ func listenToServer(connection net.Conn) {
 
 func writeToServer(connection net.Conn) {
 	scanner := bufio.NewScanner(os.Stdin)
-	for scanner.Scan() {
-		text := scanner.Text()
-		fmt.Fprintf(connection, text)
-	}
+	go func() {
+		for scanner.Scan() {
+			text := scanner.Text()
+			//need the \n
+			fmt.Fprintf(connection, text+"\n")
+		}
+	}()
+
 }
