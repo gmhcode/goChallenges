@@ -54,8 +54,8 @@ func parseProblems(problems [][]string) []problem {
 		problemArray[i].question = p[0]
 		problemArray[i].answer = p[1]
 	}
+
 	return problemArray
-}
 
 type problem struct {
 	question string
